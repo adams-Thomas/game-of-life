@@ -3,13 +3,16 @@
 import { useEffect, useState } from "react";
 import Cell from "./Cell";
 import GameInstruction from "@/interfaces/GameInstruction";
+import { runIteration } from "../actions";
 
 interface Props {
-  instruction: GameInstruction<boolean | number>
+  instruction: GameInstruction<boolean | number | number[][]>,
+  getBoard: (board: number[][]) => void
 }
 
+
 function GameBoard(props: Props) {
-  const { instruction } = props;
+  const { instruction, getBoard } = props;
   const [cells, setCells] = useState<number[][]>(
     Array(25).fill(0).map(row => new Array(25).fill(0))
   );
@@ -27,18 +30,26 @@ function GameBoard(props: Props) {
       case 'grid_reset':
         if (instruction.value === false)
           return
-
         setCells(
           Array(cells.length).fill(0).map(row => new Array(cells.length).fill(0)));
         break
 
+      case 'new_board':
+        if (typeof instruction.value == 'number' || typeof instruction.value == 'boolean')
+          return
+          
+        setCells(instruction.value)
+        break
       default:
         return
     }
   }, [instruction, cells.length])
 
+
+
   const cellChange = (newState: number, row: number, col: number) => {
     cells[row][col] = newState
+    getBoard(cells)
   }
 
   return (<>

@@ -11,4 +11,12 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: development
-      
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    volumes:
+      - ./server:/app
+    ports:
+      - "8080:8080"      
