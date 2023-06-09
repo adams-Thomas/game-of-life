@@ -28,7 +28,7 @@ module.exports = {
           color: '#1e2d2f',
         },
         '.btn': {
-          backgroundColour: 'transparent',
+          background: 'transparent',
           border: 'solid 0.125rem #1e2d2f',
           borderRadius: '0.5rem',
           minWidth: '2.625rem',
@@ -36,8 +36,13 @@ module.exports = {
           color: '#1e2d2f',
           padding: '0 0.5625rem',
           '&:hover': {
-            cursor: 'pointer'
+            cursor: 'pointer',
+            background: "white"
           }
+        },
+        '.btn-small': {
+          padding: '0.25rem',
+          minHeight: 'fit-content'
         },
         '.cell': {
           height: '1rem',

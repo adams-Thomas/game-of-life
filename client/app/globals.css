@@ -20,9 +20,15 @@ body {
   height: 100vh;
 }
 
-.cell_dead {
+.cell_0 {
   background-color: transparent;
 }
-.cell_alive  {
+.cell_1  {
   background-color: #2d93ad;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
 }
