@@ -10,7 +10,8 @@ func main() {
 	r := gin.Default()
 	r.Use(Cors())
 	r.POST("/single", src.SingleIteration)
-
+	r.POST("/run", src.RunGame)
+	r.GET("/ws", src.WsHandler)
 	r.Run()
 }
 

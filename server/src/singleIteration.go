@@ -35,15 +35,6 @@ func SingleIteration(c *gin.Context) {
 		for col_index, col := range row {
 			liveNeighbours := 0
 
-			// for i := -1; i <= 1; i++ {
-			// 	for j := -1; j <= 1; j++ {
-			// 		row_i := row_index + i
-			// 		col_j := col_index + j
-			// 		if (row_i > 0 && row_i < gridSize) && (col_j > 0 && col_j < gridSize) {
-			// 			liveNeighbours += curGame.Board[row_i][col_j]
-			// 		}
-			// 	}
-			// }
 			for k := row_index - 1; k <= row_index+1; k++ {
 				if k < 0 || k >= gridSize {
 					continue
