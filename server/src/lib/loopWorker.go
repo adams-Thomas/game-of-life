@@ -41,8 +41,10 @@ func worker(commands <-chan workerCommand) {
 			}
 			gameBoard = Iteration(gameBoard)
 			index++
+			SendMessage(gameBoard)
 		}
 	}
+	CloseConnection()
 	fmt.Println("Stopping")
 }
 

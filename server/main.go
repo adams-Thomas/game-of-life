@@ -2,6 +2,7 @@ package main
 
 import (
 	"game-of-life-server/src"
+	"game-of-life-server/src/lib"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,7 +12,7 @@ func main() {
 	r.Use(Cors())
 	r.POST("/single", src.SingleIteration)
 	r.POST("/start", src.StartGame)
-	r.GET("/ws", src.WsHandler)
+	r.GET("/ws", lib.InitConnection)
 	r.GET("/stop", src.StopGame)
 	r.Run()
 }

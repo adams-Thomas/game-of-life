@@ -1,9 +1,10 @@
 "use client"
 
-import { KeyboardEvent, KeyboardEventHandler, useState } from "react";
+import { KeyboardEvent, KeyboardEventHandler, useEffect, useState } from "react";
 import GameBoard from "./GameBoard";
 import GameInstruction from "@/interfaces/GameInstruction";
 import { runIteration } from "../actions";
+import { socket } from "../socket";
 
 function Game() {
 
@@ -13,6 +14,18 @@ function Game() {
     type: 'default',
     value: false
   })
+
+  const onDisconnect = () => {
+    console.log('Hello')
+  }
+
+  useEffect(() => {
+    socket.on('disconnect', onDisconnect)
+
+    return () => {
+      socket.off('disconnect', onDisconnect)
+    }
+  }, [])
 
   const changeGrid = () => {
     setInstruction({
@@ -65,6 +78,7 @@ function Game() {
       if (!board)
         return
 
+      await socket.connect()
       const res = await fetch("http://localhost:8080/start", {
         method: "POST",
         headers: {
