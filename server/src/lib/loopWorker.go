@@ -34,7 +34,7 @@ func worker(commands <-chan workerCommand) {
 				control = 5
 			}
 		default:
-			time.Sleep(time.Second)
+			time.Sleep(250 * time.Millisecond)
 			if gameBoard == nil {
 				fmt.Println("No board received yet, waiting...")
 				continue

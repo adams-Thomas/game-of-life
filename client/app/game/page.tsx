@@ -4,7 +4,6 @@ import { KeyboardEvent, KeyboardEventHandler, useEffect, useState } from "react"
 import GameBoard from "./GameBoard";
 import GameInstruction from "@/interfaces/GameInstruction";
 import { runIteration } from "../actions";
-import { socket } from "../socket";
 
 function Game() {
 
@@ -19,13 +18,11 @@ function Game() {
     console.log('Hello')
   }
 
-  useEffect(() => {
-    socket.on('disconnect', onDisconnect)
-
-    return () => {
-      socket.off('disconnect', onDisconnect)
-    }
-  }, [])
+  // useEffect(() => {
+  //   socket.addEventListener("open", (e) => {
+  //     console.log('hello there')
+  //   })
+  // }, [])
 
   const changeGrid = () => {
     setInstruction({
@@ -78,19 +75,47 @@ function Game() {
       if (!board)
         return
 
-      await socket.connect()
-      const res = await fetch("http://localhost:8080/start", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          board
+      const socket = new WebSocket('ws://localhost:8080/ws')
+
+      socket.onopen = async () => {
+        const res = await fetch("http://localhost:8080/start", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            board
+          })
         })
-      })
+      }
+
+      socket.onmessage = (e: MessageEvent) => {
+        blobReader(e.data)
+      }
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const blobReader = (data: any) => {
+    const reader = new FileReader();
+    reader.addEventListener('loadend', (e) => {
+      if (!e.target)
+        return
+
+      const boardString = e.target.result
+      if (!boardString)
+        return
+
+      const boardObj = JSON.parse(boardString as string)
+      setBoard(boardObj.board)
+      setInstruction({
+        type: 'new_board',
+        value: boardObj.board
+      })
+    })
+
+    reader.readAsText(data)
   }
 
   const stopGame = async () => {
