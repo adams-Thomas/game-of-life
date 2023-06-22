@@ -1,12 +1,18 @@
 Conways Game of life
 Server - Go
-Client - React with Vite
+Client - NextJS
 
-1. Build the client
-2. Throw into Docker for funs
-3. Learn the game of life
-4. Build the server
-5. Communication between client and server with sockets
+This is just a small app to learn conways game of life, get a bit more experience in NextJS and learn websockets and get a better understanding of threads in Go
+
+This will never be hosted and some of the code is not the best. One day I may clean it up.
+
+To run it yourself clone the code and use `docker-compose up` to run it. 
+
+~~1. Build the client~~
+~~2. Throw into Docker for funs~~
+~~3. Learn the game of life~~
+~~4. Build the server~~
+~~5. Communication between client and server with sockets~~
 
 <h5>
 Links
