@@ -60,6 +60,38 @@ function Game() {
     }
   }
 
+  const startGame = async () => {
+    try {
+      if (!board)
+        return
+
+      const res = await fetch("http://localhost:8080/start", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          board
+        })
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const stopGame = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/stop", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (<>
     <div className="p-10">
       <h1 className="mb-8">
@@ -73,10 +105,10 @@ function Game() {
           <button className='btn mb-8' onClick={singleIter}>
             Next Iteration
           </button>
-          <button className='btn mb-8'>
+          <button className='btn mb-8' onClick={startGame}>
             Run
           </button>
-          <button className='btn mb-8'>
+          <button className='btn mb-8' onClick={stopGame}>
             Stop
           </button>
           <button className='btn' onClick={resetGrid}>
